@@ -23,4 +23,4 @@ jobs:
       - name: Publish
         uses: cloudflare/wrangler-action@1.2.0
         with:
-          apiToken: ${{CF_API_TOKEN }}
+          apiToken: ${{ secrets.CF_API_TOKEN }}
