@@ -26,7 +26,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
      uses: cloudflare/wrangler-action@1.2.0
       with:
-        apiToken: ${{secrets.CF_API_TOKEN }}
+        apiToken: ${{CF_API_TOKEN }}
         workingDirectory: "test"
           publish: false
           secrets: |
