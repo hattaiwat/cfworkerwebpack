@@ -10,33 +10,17 @@ on:
   pull_request:
     branches: [ main ]
 
-  # Allows you to run this workflow manually from the Actions tab
- # workflow_dispatch:
+  # Allows you to run this workflow manually from the Actions tab workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
- 
-  build-only:
+  deploy:
     runs-on: ubuntu-latest
-    name: Only build the app
- 
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    name: Deploy
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-     uses: cloudflare/wrangler-action@1.2.0
-      with:
-        apiToken: ${{CF_API_TOKEN }}
-        workingDirectory: "test"
-          publish: false
-          secrets: |
-            SECRET1
-            SECRET2
-          preCommands: echo "*** pre commands ***"
-          postCommands: |
-            echo "*** post commands ***"
-            wrangler build
-            echo "******"
-        env:
-          SECRET1: ${{ secrets.SECRET1 }}
-          SECRET2: ${{ secrets.SECRET2 }}
+      - uses: actions/checkout@master
+      - name: Build site
+        run: 'npm run build'
+      - name: Publish
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{CF_API_TOKEN }}
